@@ -1,9 +1,13 @@
 package hello.februarystudy.web;
 
+import hello.februarystudy.config.oauth.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -13,12 +17,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 //@RunWith(SpringRunner.class) //Junit5에는 없다.
 @ExtendWith(SpringExtension.class) // Junit5에서는 이것을 쓴다. ... 1
-@WebMvcTest(controllers = HelloController.class) // ... 2 여러 스프링테스트 중, Web(Spring MVC)에 집중할 수 있는 어노테이션
+@WebMvcTest(controllers = HelloController.class, excludeFilters = { // ... 2 여러 스프링테스트 중, Web(Spring MVC)에 집중할 수 있는 어노테이션, CustomOAuth2UserService 를 스캔하지 않음
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
+                classes = SecurityConfig.class)
+        }
+)
 class HelloControllerTest {
 
     @Autowired // ... 3, 스프링이 관리하는 Bean 주입
     private MockMvc mvc; // ... 4 웹 API 를 테스트할 때 사용
 
+    @WithMockUser(roles = "USER")
     @Test
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
@@ -28,6 +37,7 @@ class HelloControllerTest {
                 .andExpect(content().string(hello)); // ... 7, 컨트롤러에서 hello 를 리턴하는지 검증
     }
 
+    @WithMockUser(roles = "USER")
     @Test
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";
