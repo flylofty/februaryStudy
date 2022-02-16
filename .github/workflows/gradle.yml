@@ -44,6 +44,9 @@ jobs:
     - name: Copy appspec
       run: cp appspec.yml ./deploy/
 
+    - name: Copy shell
+      run: cp ./scripts/* ./deploy/
+
     - name: Make zip file
       run: zip -r -qq -j ./flylofty-springboot-build.zip ./deploy/
 
