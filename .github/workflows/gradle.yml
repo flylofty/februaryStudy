@@ -39,7 +39,7 @@ jobs:
       run: mkdir -p deploy
 
     - name: Copy Script
-      run: cp ./scripts/*.sh ./deploy/
+      run: cp ./scripts/* ./deploy/
 
     - name: Copy Appspec
       run: cp appspec.yml ./deploy/
