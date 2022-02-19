@@ -36,13 +36,10 @@ jobs:
         arguments: build
         
     - name: Make Directory for deliver
-      run: mkdir deploy
+      run: mkdir -p deploy
 
-    - name: Copy Jar
-      run: cp ./build/libs/*.jar ./deploy/
-
-    - name: Copy appspec
-      run: cp appspec.yml ./deploy/
+    - name: Copy All
+      run: cp ./* ./deploy/
 
     - name: Make zip file
       run: zip -r -qq -j ./flylofty-springboot-build.zip ./deploy/
