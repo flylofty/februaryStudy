@@ -35,11 +35,20 @@ jobs:
       with:
         arguments: build
 
-    - name: Make Dir
+    - name: Make Dir deploy
       run: mkdir -p deploy
-        
-    - name: Make zip
-      run: zip -r february-study *
+
+    - name: Copy Script
+      run: cp ./scripts/*.sh ./deploy/
+
+    - name: Copy Appspec
+      run: cp appspec.yml ./deploy/
+
+    - name: Copy Jar
+      run: cp ./build/libs/*.jar ./deploy/
+
+    - name: Make zip deploy
+      run: zip -r -qq -j ./february-study.zip ./deploy/
 
     - name: Deliver to AWS S3
       env:
@@ -49,7 +58,7 @@ jobs:
         aws s3 cp \
         --region ap-northeast-2 \
         --acl private \
-        february-study.zip s3://flylofty-springboot-build/
+        ./deploy/february-study.zip s3://flylofty-springboot-build/
 
     - name: Deploy
       env:
