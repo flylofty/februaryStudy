@@ -34,15 +34,15 @@ jobs:
       uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
       with:
         arguments: build
+
+    - name: Make Dir
+      run: mkdir -p deploy
         
     - name: Make zip
       run: zip -r february-study *
 
-    - name: Make Dir
-      run: mkdir -p deploy
-
     - name: Move zip
-      run: mv ./february-study.zip ./deploy/
+      run: mv february-study.zip ./deploy/
 
     - name: Deliver to AWS S3
       env:
