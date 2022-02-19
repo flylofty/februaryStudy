@@ -35,35 +35,14 @@ jobs:
       with:
         arguments: build
         
-    - name: Make Directory for deliver
+    - name: Make zip
+      run: zip -r february-study *
+
+    - name: Make Dir
       run: mkdir -p deploy
 
-    - name: Copy appspec
-      run: cp appspec.yml ./deploy/
-
-    - name: Copy bulid
-      run: cp -r ./build ./deploy/
-
-    - name: Copy build gradle
-      run: cp build.gradle ./deploy/
-
-    - name: Copy gradle
-      run: cp -r ./gradle ./deploy/
-
-    - name: Copy gradlew
-      run: cp gradlew ./deploy/
-
-    - name: Copy gradlew bat
-      run: cp gradlew.bat ./deploy/
-
-    - name: Copy settings gradle
-      run: cp settings.gradle ./deploy/
-
-    - name: Copy src
-      run: cp -r ./src ./deploy/
-
-    - name: Make zip file
-      run: zip -r -qq -j ./flylofty-springboot-build.zip ./deploy/
+    - name: Move zip
+      run: mv ./february-study.zip ./deploy/
 
     - name: Deliver to AWS S3
       env:
@@ -73,7 +52,7 @@ jobs:
         aws s3 cp \
         --region ap-northeast-2 \
         --acl private \
-        ./flylofty-springboot-build.zip s3://flylofty-springboot-build/
+        ./february-study.zip s3://flylofty-springboot-build/
 
     - name: Deploy
       env:
@@ -84,5 +63,5 @@ jobs:
         --application-name codedeploy-springboot2-webservice \
         --deployment-group-name springboot2-webservice-group \
         --file-exists-behavior OVERWRITE \
-        --s3-location bucket=flylofty-springboot-build,bundleType=zip,key=flylofty-springboot-build.zip \
+        --s3-location bucket=flylofty-springboot-build,bundleType=zip,key=february-study.zip \
         --region ap-northeast-2
