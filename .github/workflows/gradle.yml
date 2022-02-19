@@ -38,8 +38,29 @@ jobs:
     - name: Make Directory for deliver
       run: mkdir -p deploy
 
-    - name: Copy All
-      run: cp ./* ./deploy/
+    - name: Copy appspec
+      run: cp appspec.yml ./deploy/
+
+    - name: Copy bulid
+      run: cp ./build ./deploy/
+
+    - name: Copy build gradle
+      run: cp build.gradle ./deploy/
+
+    - name: Copy gradle
+      run: cp ./gradle ./deploy/
+
+    - name: Copy gradlew
+      run: cp gradlew ./deploy/
+
+    - name: Copy gradlew bat
+      run: cp gradlew.bat ./deploy/
+
+    - name: Copy settings gradle
+      run: cp settings.gradle ./deploy/
+
+    - name: Copy src
+      run: cp ./src ./deploy/
 
     - name: Make zip file
       run: zip -r -qq -j ./flylofty-springboot-build.zip ./deploy/
