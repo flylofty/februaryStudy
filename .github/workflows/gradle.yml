@@ -42,13 +42,13 @@ jobs:
       run: cp appspec.yml ./deploy/
 
     - name: Copy bulid
-      run: cp ./build ./deploy/
+      run: cp -r ./build ./deploy/
 
     - name: Copy build gradle
       run: cp build.gradle ./deploy/
 
     - name: Copy gradle
-      run: cp ./gradle ./deploy/
+      run: cp -r ./gradle ./deploy/
 
     - name: Copy gradlew
       run: cp gradlew ./deploy/
@@ -60,7 +60,7 @@ jobs:
       run: cp settings.gradle ./deploy/
 
     - name: Copy src
-      run: cp ./src ./deploy/
+      run: cp -r ./src ./deploy/
 
     - name: Make zip file
       run: zip -r -qq -j ./flylofty-springboot-build.zip ./deploy/
